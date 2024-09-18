@@ -1,1 +1,1 @@
-# cicd_course_exercise
+This repository has been created to implement exercises in the "Integracion continua (Maven, Jenkins, Sonar, Jfrog)" course. 
