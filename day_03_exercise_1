@@ -1,0 +1,58 @@
+/*
+=========================
+Descripcion del ejercicio
+=========================
+Integrar GitHub con Jenkins.
+
+Desde GitHub, desarrollar un Jenkinsfile que cuente con 2 stages:
+
+- Stage 'Calcular Edad': En base a una fecha de nacimiento informada como 
+variable global, se debe calcular la edad de la misma utilizando la funcion
+"getYear()", donde se debe restar el año de la fecha informada al año actual
+(que también debe estar almacenado en una variable).
+
+- Stage 'Generar txt': Generar un fichero de salida con la información
+calculada.
+
+En GitHub, se debe crear una rama llamada 'desarrollo' donde este alojado el
+Jenkinsfile que contenga el codigo a ejecutar.
+
+Entregables:
+- Link del repositorio de GitHub con el Jenkinsfile.
+
+*/
+
+pipeline {
+    agent any
+
+    environment {
+        birth_year = '1995'
+        age = ''
+        current_year = "${new Date().getYear() + 1900}" // Get the current year using getYear() and adding 1900
+        FILE_PATH = "C:\\Users\\adiazd\\OneDrive - Indra\\Cursos\\2024_IntegracionContinua"
+        FILE_NAME = "age_result"
+
+    }
+
+    stages {
+        stage('Calculate Age') {
+            steps {
+                script {
+                    age = Integer.parseInt(current_year) - Integer.parseInt(birth_year)
+                    println("Calculated age is: ${age}")
+                }
+            }
+        }
+
+        stage('Generate File with Result') {
+            steps {
+                script {
+                    def file_path = "${FILE_PATH}\\${FILE_NAME}.txt"
+                    writeFile file: file_path, text: "The calculated age is: ${age}"
+                    println("File generated in the workspace: ${file_path}")
+                }
+            }
+        }
+    }
+}
+
