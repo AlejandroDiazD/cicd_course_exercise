@@ -1,0 +1,6 @@
+/*
+1. Configurar un proyecto maven en start.spring.io
+2. Crear una tarea tipo Maven en Jenkins con los siguientes goals: clean install
+3. Enviar captura de la consola con el mensaje "BUILD SUCCESS" y el enlace
+del repositorio.
+*/
