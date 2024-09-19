@@ -35,20 +35,6 @@ pipeline
                 }
             }
         }
-        
-        stage("Comando MVN Install")
-        {
-            steps
-            {
-                script
-                {
-                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
-                    {
-                        bat 'mvn install'
-                    }
-                }
-            }
-        }
 
         stage("Comando MVN Validate")
         {
@@ -73,6 +59,20 @@ pipeline
                     dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
                     {
                         bat 'mvn test'
+                    }
+                }
+            }
+        }
+
+        stage("Comando MVN Install")
+        {
+            steps
+            {
+                script
+                {
+                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
+                    {
+                        bat 'mvn install'
                     }
                 }
             }
