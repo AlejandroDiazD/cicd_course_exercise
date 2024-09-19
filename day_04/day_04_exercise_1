@@ -28,7 +28,7 @@ pipeline
             {
                 script
                 {
-                    dir("C:/ProgramData/Jenkins/.jenkins/workspace/Indra_12/maven2")
+                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
                     {
                         bat 'mvn clean'
                     }
