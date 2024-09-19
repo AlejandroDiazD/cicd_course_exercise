@@ -28,7 +28,7 @@ pipeline
             {
                 script
                 {
-                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven2\\maven2")
+                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
                     {
                         bat 'mvn clean'
                     }
@@ -42,7 +42,7 @@ pipeline
             {
                 script
                 {
-                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven2\\maven2")
+                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
                     {
                         bat 'mvn install'
                     }
@@ -56,7 +56,7 @@ pipeline
             {
                 script
                 {
-                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven2\\maven2")
+                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
                     {
                         bat 'mvn validate'
                     }
@@ -70,7 +70,7 @@ pipeline
             {
                 script
                 {
-                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven2\\maven2")
+                    dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2")
                     {
                         bat 'mvn test'
                     }
@@ -82,7 +82,7 @@ pipeline
         {
             steps
             {
-                bat """xcopy "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven2\\maven2\\target\\maven2-0.0.1-SNAPSHOT.jar" "C:\\" /y
+                bat """xcopy "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven2\\target\\maven2-0.0.1-SNAPSHOT.jar" "C:\\" /y
                 """
                 echo "Se movio el archivo."
             }
