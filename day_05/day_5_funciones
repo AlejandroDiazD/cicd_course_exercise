@@ -1,0 +1,128 @@
+pipeline {
+    agent any
+    environment {
+        GIT_REPO_URL = 'https://github.com/AlejandroDiazD/cicd_course_exercise'  // Reemplaza con tu URL
+        BRANCH = 'testing'
+        MVN_CMD = 'mvn'  // Asume que Maven está instalado y accesible
+    }
+
+    tools
+    {
+        maven 'Maven'
+    }
+
+    options
+    {
+        timeout(time:10, unit: 'MINUTES')
+    }
+    
+    stages {
+        stage('Clone Repository') {
+            steps {
+                    git branch: "${BRANCH}", url: "${GIT_REPO_URL}"
+            }
+        }
+
+        stage('Clean Project') {
+            steps {
+                script {
+                    cleanProject()
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    runTests()
+                }
+            }
+        }
+
+        stage('Install Project') {
+            steps {
+                script {
+                    installProject()
+                }
+            }
+        }
+
+        stage('Show User') {
+            steps {
+                script {
+                    showUser()
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                echo "Pipeline execution completed."
+            }
+        }
+    }
+}
+
+// Definir las funciones para los stages
+
+def cleanProject() {
+    try {
+        echo "Running Maven clean..."
+        dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\dia4_ejercicio1_maven\\maven_day5_funciones")
+        {
+            bat 'mvn clean'
+        }
+        createOutputFile('Clean Stage', 'Success')
+    } catch (Exception e) {
+        echo "Error during clean stage: ${e}"
+        createOutputFile('Clean Stage', 'Failed')
+        throw e
+    }
+}
+
+def runTests() {
+    try {
+        echo "Running Maven tests..."
+        sh "${env.MVN_CMD} test"
+        createOutputFile('Test Stage', 'Success')
+    } catch (Exception e) {
+        echo "Error during test stage: ${e}"
+        createOutputFile('Test Stage', 'Failed')
+        throw e
+    }
+}
+
+def installProject() {
+    try {
+        echo "Running Maven install..."
+        sh "${env.MVN_CMD} install"
+        createOutputFile('Install Stage', 'Success')
+    } catch (Exception e) {
+        echo "Error during install stage: ${e}"
+        createOutputFile('Install Stage', 'Failed')
+        throw e
+    }
+}
+
+def showUser() {
+    try {
+        def user = sh(script: 'whoami', returnStdout: true).trim()
+        echo "User executing the pipeline: ${user}"
+        createOutputFile('User Stage', "Executed by ${user}")
+    } catch (Exception e) {
+        echo "Error during user stage: ${e}"
+        createOutputFile('User Stage', 'Failed')
+        throw e
+    }
+}
+
+// Función para generar archivos de salida por stage
+def createOutputFile(stageName, status) {
+    FILE_PATH = "C:\\Users\\adiazd\\OneDrive - Indra\\Cursos\\2024_IntegracionContinua"
+    def outputFile = "${FILE_PATH}\\${stageName.replace(' ', '_')}_result.txt"
+    def content = "${stageName} - Status: ${status}"
+    writeFile file: outputFile, text: content
+    echo "Output written to ${outputFile}"
+}

@@ -1,3 +1,13 @@
+/*
+Desarrollar un pipeline que realice calculos matematicos a partir de datos almacenados en un archivo, informe los resultados por consola
+y guarde los resultados en otro archivo. 
+Los calculos que se deben hacer son los aritmeticos tradicionales:
+- Suma
+- Resta
+- Multiplicacion
+- Division 
+ -> En el caso de la division validar que ninguno de los dos numeros sea 0 (cero)
+*/
 pipeline {
     agent any
 
