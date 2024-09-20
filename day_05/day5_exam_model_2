@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Read Input File') {
+            steps {
+                script {
+                    // Leer archivo de entrada
+                    FILE_PATH = "C:\\Users\\adiazd\\OneDrive - Indra\\Cursos\\2024_IntegracionContinua"
+                    FILE_NAME_INPUT = "model_exam_2_input"
+                    FILE_NAME_OUTPUT = "model_exam_2_output"
+                    def inputFile = readFile "${FILE_PATH}\\${FILE_NAME_INPUT}.txt"
+                    def lines = inputFile.split("\n")
+                    def num1 = lines[0].toInteger()
+                    def num2 = lines[1].toInteger()
+
+                    // Imprimir números leídos
+                    echo "Number 1: ${num1}"
+                    echo "Number 2: ${num2}"
+
+                    // Realizar cálculos
+                    def sum = num1 + num2
+                    def subtract = num1 - num2
+                    def multiply = num1 * num2
+                    def divide = (num1 != 0 && num2 != 0) ? (num1 / num2) : 'Division not possible due to zero.'
+
+                    // Imprimir resultados en consola
+                    echo "Sum: ${sum}"
+                    echo "Subtraction: ${subtract}"
+                    echo "Multiplication: ${multiply}"
+                    echo "Division: ${divide}"
+
+                    // Guardar resultados en archivo de salida
+                    def outputFileContent = """
+                    Results:
+                    Sum: ${sum}
+                    Subtraction: ${subtract}
+                    Multiplication: ${multiply}
+                    Division: ${divide}
+                    """
+
+                    writeFile file: "${FILE_PATH}\\${FILE_NAME_OUTPUT}.txt", text: outputFileContent
+                    echo "Results saved to output.txt"
+                }
+            }
+        }
+    }
+}

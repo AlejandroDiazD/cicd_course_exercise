@@ -1,0 +1,51 @@
+/*
+Generar un pipeline que informe 10 numeros consecutivos, y por cada numero consecutivo informar el cuadradado de dicho numero en un 
+txt de salida con el formato "salida_FechaDeHoy"
+N= N*N
+2 = 4 
+3 = 9
+4 = 16
+5 = 25
+6 = 36
+7 = 49
+8 = 64
+*/
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Generate Consecutive Numbers and Squares') {
+            steps {
+                script {
+                    OUTPUT_FILE_PATH = "C:\\Users\\adiazd\\OneDrive - Indra\\Cursos\\2024_IntegracionContinua"
+
+                    // Obtener la fecha actual en el formato yyyy-MM-dd
+                    def currentDate = new Date().format('yyyy-MM-dd', TimeZone.getTimeZone('UTC'))
+
+                    // Crear el nombre del archivo de salida con la fecha
+                    def outputFileName = "${OUTPUT_FILE_PATH}\\salida_${currentDate}.txt"
+                    
+                    // Inicializar el contenido del archivo de salida
+                    def outputContent = ""
+
+                    // Generar 10 números consecutivos y calcular su cuadrado
+                    for (int i = 1; i <= 10; i++) {
+                        def square = i * i
+                        def line = "${i} = ${square}\n"
+                        
+                        // Imprimir cada número y su cuadrado en la consola
+                        echo line
+
+                        // Agregar el resultado al contenido del archivo
+                        outputContent += line
+                    }
+
+                    // Escribir los resultados en el archivo de salida
+                    writeFile file: outputFileName, text: outputContent
+                    echo "Results saved to ${outputFileName}"
+                }
+            }
+        }
+    }
+}
